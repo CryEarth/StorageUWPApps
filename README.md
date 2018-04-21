@@ -2,7 +2,7 @@ Name
 ====
 
 # StorageUWPApps
-UWPからAzureサービス利用 ～今更ながらのUWPアプリ構築からのネタアプリ
+#### UWPからAzureサービス利用 ～今更ながらのUWPアプリ構築からのネタアプリ
 
 ## Overview
 ・Blob Storageの一覧取得<br/>

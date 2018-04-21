@@ -5,16 +5,21 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageUWPApps", "StorageUWPApps\StorageUWPApps.csproj", "{C2E648A0-B841-435B-B540-B81B78836683}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStorageClassLibrary", "BlobStorageClassLibrary\AzureStorageClassLibrary.csproj", "{C6FCB431-61C7-43F2-9702-53164CD69796}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|ARM.ActiveCfg = Debug|ARM
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|ARM.Build.0 = Debug|ARM
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -24,6 +29,7 @@ Global
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|x86.ActiveCfg = Debug|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|x86.Build.0 = Debug|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Debug|x86.Deploy.0 = Debug|x86
+		{C2E648A0-B841-435B-B540-B81B78836683}.Release|Any CPU.ActiveCfg = Release|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|ARM.ActiveCfg = Release|ARM
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|ARM.Build.0 = Release|ARM
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|ARM.Deploy.0 = Release|ARM
@@ -33,6 +39,22 @@ Global
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|x86.ActiveCfg = Release|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|x86.Build.0 = Release|x86
 		{C2E648A0-B841-435B-B540-B81B78836683}.Release|x86.Deploy.0 = Release|x86
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|ARM.Build.0 = Debug|ARM
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|x64.ActiveCfg = Debug|x64
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|x64.Build.0 = Debug|x64
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|x86.ActiveCfg = Debug|x86
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Debug|x86.Build.0 = Debug|x86
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|ARM.ActiveCfg = Release|ARM
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|ARM.Build.0 = Release|ARM
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|x64.ActiveCfg = Release|x64
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|x64.Build.0 = Release|x64
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|x86.ActiveCfg = Release|x86
+		{C6FCB431-61C7-43F2-9702-53164CD69796}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
