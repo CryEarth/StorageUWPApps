@@ -25,7 +25,7 @@ Name
 
 ## Licence
 
-[BSD 3-Clause License](https://github.com/tcnksm/tool/blob/master/LICENCE)
+[BSD 3-Clause License](https://github.com/CryEarth/StorageUWPApps/LICENCE)
 
 ## Author
 
