@@ -104,6 +104,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <PRIResource Include="Resources\storageuwpapps.resw" />
     <None Include="StorageUWPApps_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +136,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlobStorageClassLibrary\AzureStorageClassLibrary.csproj">

@@ -1,7 +1,5 @@
-Name
+StorageUWPApps
 ====
-
-# StorageUWPApps
 #### UWPからAzureサービス利用 ～今更ながらのUWPアプリ構築からのネタアプリ
 
 ## Overview
