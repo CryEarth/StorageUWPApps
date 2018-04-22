@@ -120,11 +120,14 @@
   <data name="AccountKey" xml:space="preserve">
     <value>Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==</value>
   </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>devstoreaccount1</value>
+  </data>
   <data name="BlobEndpoint" xml:space="preserve">
     <value>http://127.0.0.1:10000/devstoreaccount1</value>
   </data>
   <data name="DefaultEndpointsProtocol" xml:space="preserve">
-    <value>http;AccountName=devstoreaccount1</value>
+    <value>http</value>
   </data>
   <data name="QueueEndpoint" xml:space="preserve">
     <value>http://127.0.0.1:10001/devstoreaccount1</value>
