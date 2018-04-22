@@ -18,15 +18,17 @@ PPTにまとめています：[チュートリアルなど.pptx](https://github.
 ・Visual Sutudio 2017 Professional or Community
 
 ## Requirement
-・Windows10
-・UWP SDK
-・Azure SDK
-・Azure Storage 1Emulator
-
-## Usage
+・Windows10<br/>
+・UWP SDK<br/>
+・Azure SDK<br/>
+・Azure Storage Emulator
 
 ## Contribution
-
+1. Fork it ( http://github.com/CryEarth/StorageUWPApps/fork )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create new Pull Request
 ## Licence
 
 [BSD 3-Clause License](https://github.com/CryEarth/StorageUWPApps/blob/master/LICENSE)
