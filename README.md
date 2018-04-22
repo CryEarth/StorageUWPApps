@@ -18,6 +18,10 @@ PPTにまとめています：[チュートリアルなど.pptx](https://github.
 ・Visual Sutudio 2017 Professional or Community
 
 ## Requirement
+・Windows10
+・UWP SDK
+・Azure SDK
+・Azure Storage 1Emulator
 
 ## Usage
 
