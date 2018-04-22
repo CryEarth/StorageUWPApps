@@ -10,7 +10,7 @@ Name
 ・Blob Storageからのダウンロード機能
 
 ## Description
-
+PPTにまとめています：[チュートリアルなど.pptx](https://github.com/CryEarth/StorageUWPApps/blob/master/%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AA%E3%81%A9.pptx)
 ## Demo
 ・de:code 2018 Event ～～～
 
