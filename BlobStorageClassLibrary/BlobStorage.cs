@@ -1,10 +1,10 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
+﻿/* 
+ * ©2018 Tomoyuki Sasaki All rights reserved.
+ * 本コンテンツの著作権、および本コンテンツ中に出てくる商標権、団体名、ロゴ、製品、サービスなどはそれぞれ、各権利保有者に帰属します。
+ */
+
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -19,7 +19,6 @@ namespace AzureStorageClassLibrary.Blob
     {
         #region
         // 変数
-        private StorageCredentials credentials { get; set; }
         private CloudStorageAccount storageAccount { get; set; }
         private CloudBlobClient blobClient { get; set; }
 
@@ -30,11 +29,10 @@ namespace AzureStorageClassLibrary.Blob
         /// </summary>
         /// <param name="accountName">接続名</param>
         /// <param name="accessKey">接続Key</param>
-        public BlobStorage(string accountName, string accessKey)
+        public BlobStorage(string connectionString)
         {
             // 接続設定を確保する
-            credentials = new StorageCredentials(accountName, accessKey);
-            storageAccount = new CloudStorageAccount(credentials, true);
+            storageAccount = CloudStorageAccount.Parse(connectionString);
 
             // Blobクライアントの作成
             blobClient = storageAccount.CreateCloudBlobClient();
@@ -54,9 +52,28 @@ namespace AzureStorageClassLibrary.Blob
             return ret;
         }
 
+        /// <summary>
+        /// Blob Container 作成
+        /// </summary>
+        /// <param name="blobName"></param>
+        /// <returns></returns>
         //container作成
+        public async Task<bool> BlobContainerCreateAsync(string containerName)
+        {
+            var container = blobClient.GetContainerReference(containerName);
 
-        // Blob List
+            var ret = await container.CreateIfNotExistsAsync();
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Blob List
+        /// </summary>
+        /// <returns></returns>
+        public async Task BlobGetListAsync()
+        {
+        }
 
         // Blob binary upload
 

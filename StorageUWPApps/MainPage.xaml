@@ -12,14 +12,23 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <ListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemClick="listView_ItemClick" IsItemClickEnabled="True"/>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="upload_button" Content="アップロード" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="2" Margin="5,0,5,0"/>
+                <Button x:Name="reference_button" Content="参 照" HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Grid.Column="1"/>
+                <TextBox HorizontalAlignment="Stretch" Margin="5,0,5,0" Text="" VerticalAlignment="Center" IsReadOnly="True"/>
+            </Grid>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2"/>
         </Grid>
