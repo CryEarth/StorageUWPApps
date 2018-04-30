@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -18,6 +19,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AzureStorageClassLibrary.Models;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
@@ -28,7 +32,10 @@ namespace StorageUWPApps
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        BlobStorage blob;
+
+        private BlobStorage blob;
+
+        private BlobListDataModel selectBlobData = new BlobListDataModel();
 
         public MainPage()
         {
@@ -41,17 +48,142 @@ namespace StorageUWPApps
             "TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;" +
             "QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;");
 
+        }
 
-            // リストビュー動作確認
-            for (int i = 0; i < 10; i++)
+        /// <summary>
+        /// アイテム選択
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            selectBlobData = (BlobListDataModel)e.ClickedItem;
+        }
+
+        /// <summary>
+        /// Blob一覧取得
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void GetListButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (await blob.BlobContainerExistsAsync(ContainerText.Text))
             {
-                listView.Items.Add("Item-" + i);
+                var dataList = await blob.BlobGetListAsync(ContainerText.Text);
+
+                if(dataList.Count > 0)
+                {
+                    dataListView.ItemsSource = new ObservableCollection<BlobListDataModel>(dataList);
+                }
+                else
+                {
+                    var msg = new ContentDialog();
+                    msg.Title = "Container";
+                    msg.Content = $"「{ContainerText.Text}」にアイテムはありませんでした。";
+                    msg.PrimaryButtonText = "OK";
+                    await msg.ShowAsync();
+                }
+            }
+            else
+            {
+                var msg = new ContentDialog();
+                msg.Title = "Container";
+                msg.Content = $"「{ContainerText.Text}」は存在しません。";
+                msg.PrimaryButtonText = "OK";
+                await msg.ShowAsync();
             }
         }
 
-        private void listView_ItemClick(object sender, ItemClickEventArgs e)
+        /// <summary>
+        /// blob Container作成
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ContainerCreateButton_Click(object sender, RoutedEventArgs e)
         {
-            var item = e.ClickedItem;
+            if (await blob.BlobContainerExistsAsync(ContainerText.Text))
+            {
+                var msg = new ContentDialog();
+                msg.Title = "Container";
+                msg.Content = $"「{ContainerText.Text}」は既に存在しています。";
+                msg.PrimaryButtonText = "OK";
+                await msg.ShowAsync();
+            }
+            else
+            {
+                var msg = new ContentDialog();
+                msg.Title = "Container";
+                msg.Content = $"「{ContainerText.Text}」を作成してよろしいですか？";
+                msg.PrimaryButtonText = "OK";
+                msg.SecondaryButtonText = "NO";
+
+                var res = await msg.ShowAsync();
+
+                if (res == ContentDialogResult.Primary)
+                {
+                    await blob.BlobContainerCreateAsync(ContainerText.Text);
+                }
+            }
+        }
+
+        /// <summary>
+        /// blob item　ダウンロード
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectBlobData == null || selectBlobData.blobType == "")
+            {
+                // アイテムを選択していない
+                var msg = new ContentDialog();
+                msg.Title = "Item";
+                msg.Content = "一覧からダウンロードするアイテムを選択してください。";
+                msg.PrimaryButtonText = "OK";
+                await msg.ShowAsync();
+            }
+            else if(selectBlobData.contentType.ToString().ToLower().Equals(("Folder").ToLower()))
+            {
+                // フォルダを選択
+                var msg = new ContentDialog();
+                msg.Title = "Item";
+                msg.Content = "フォルダはダウンロードできません。";
+                msg.PrimaryButtonText = "OK";
+                await msg.ShowAsync();
+            }
+            else
+            {
+                var extName = Path.GetExtension(selectBlobData.name);
+
+                // ファイルを選択
+                var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+
+                savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+
+                savePicker.FileTypeChoices.Add($"{selectBlobData.contentType}", new List<string>() { $"{extName}" });
+
+                savePicker.SuggestedFileName = $"{selectBlobData.name}";
+
+                Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+                if (file != null)
+                {
+                    Windows.Storage.CachedFileManager.DeferUpdates(file);
+
+                    var data = await blob.GetBlobBinaryAsync(ContainerText.Text, selectBlobData.name);
+
+                    await Windows.Storage.FileIO.WriteBytesAsync(file, data);
+
+                    Windows.Storage.Provider.FileUpdateStatus status = await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
+                    if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+                    {
+                        Debug.WriteLine($"File {file.Name} was saved.");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"File {file.Name} couldn't be saved.");
+                    }
+                }
+            }
         }
     }
 }

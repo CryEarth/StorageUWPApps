@@ -5,32 +5,88 @@
     xmlns:local="using:StorageUWPApps"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:AzureStorageClassLibrary.Models"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="StretchListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <DataTemplate x:Key="DataListViewItemTemplate" x:DataType="viewModels:BlobListDataModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Bind name}" Margin="5,0,5,0"/>
+                <TextBlock Text="{x:Bind lastModified}" Grid.Column="1"  Margin="5,0,5,0"/>
+                <TextBlock Text="{x:Bind blobType}" Grid.Column="2" Margin="5,0,5,0"/>
+                <TextBlock Text="{x:Bind contentType}" Grid.Column="3" Margin="5,0,5,0"/>
+                <TextBlock Text="{x:Bind size}" Grid.Column="4" Margin="5,0,5,0"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemClick="listView_ItemClick" IsItemClickEnabled="True"/>
+        <Grid>
+            <ListView ItemTemplate="{StaticResource DataListViewItemTemplate}" x:Name="dataListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemContainerStyle="{StaticResource StretchListViewItemStyle}"  IsItemClickEnabled="True" ItemClick="listView_ItemClick" >
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <TextBlock Text="LastModified" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <TextBlock Text="Blob Type" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <TextBlock Text="Content Type" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <TextBlock Text="Size" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    </Grid>
+                </ListView.Header>
+            </ListView>
+        </Grid>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="upload_button" Content="アップロード" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="2" Margin="5,0,5,0"/>
-                <Button x:Name="reference_button" Content="参 照" HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Grid.Column="1"/>
-                <TextBox HorizontalAlignment="Stretch" Margin="5,0,5,0" Text="" VerticalAlignment="Center" IsReadOnly="True"/>
+                <TextBlock HorizontalAlignment="Stretch" Text="コンテナ名" TextWrapping="Wrap" VerticalAlignment="Center" Canvas.ZIndex="-2" Margin="10,0,10,0" TextAlignment="Center" FontFamily="Segoe UI"/>
+                <TextBox x:Name="ContainerText" HorizontalAlignment="Stretch" Margin="10,0,10,0" Text="storageuwp" VerticalAlignment="Center" Grid.Column="1"/>
+                <Button x:Name="GetListButton" Content="一覧取得" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="2" Click="GetListButton_Click"/>
+                <Button x:Name="ContainerCreateButton" Content="コンテナ作成" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="3" Click="ContainerCreateButton_Click"/>
+
             </Grid>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2"/>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                    <Button x:Name="UploadButton" Content="アップロード" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="3" Margin="5,0,5,0"/>
+                    <Button x:Name="Referencebutton" Content="参 照" HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Grid.Column="2"/>
+                    <TextBox x:Name="UpLoadText" HorizontalAlignment="Stretch" Margin="5,0,5,0" Text="" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1"/>
+                <Button x:Name="DownloadButton" Content="ダウンロード" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Center" Grid.Column="4" Click="DownloadButton_Click"/>
+                <TextBlock HorizontalAlignment="Stretch" Margin="10,0,10,0" Text="ファイル操作" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"/>
+            </Grid>
         </Grid>
 
     </Grid>

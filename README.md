@@ -3,23 +3,28 @@ StorageUWPApps
 #### UWPからAzureサービス利用 ～今更ながらのUWPアプリ構築からのネタアプリ
 
 ## Overview
-・Blob Storageの一覧取得<br/>
-・Blob Storageへのアップロード機能<br/>
-・Blob Storageからのダウンロード機能
+* Blob Storageの一覧取得
+* Blob Storageへのアップロード機能
+* Blob Storageからのダウンロード機能
 
 ## Description
-
-## Demo
-・de:code 2018 Event ～～～
-
-## VS. 
-・Visual Sutudio 2017 Professional or Community
+* de:code 2018 参加者向け「サンプルコード」
+* Development tools
+  * Visual Sutudio 2017 Professional or Community
+  * Azure Storage Emulator
+  * Azure Storage Explorer
 
 ## Requirement
-
-## Usage
+* Windows 10
+* UWP SDK
+* Azure SDK
 
 ## Contribution
+1. Fork it ( http://github.com//cryearth/StorageUWPApps/fork )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create new Pull Request
 
 ## Licence
 
