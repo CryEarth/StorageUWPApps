@@ -22,6 +22,8 @@ using Windows.UI.Xaml.Navigation;
 using AzureStorageClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x411 を参照してください
 
@@ -41,7 +43,7 @@ namespace StorageUWPApps
         {
             this.InitializeComponent();
 
-            // サンプルのためべた書きしていますが、このような書き方はセキュリティホールになりうるため、行わないでください。
+            // サンプルのためべた書きしていますが、このような書き方はセキュリティホールになるため、行わないでください。
             blob = new BlobStorage("DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;" +
             "AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;" +
             "BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;" +
@@ -67,11 +69,13 @@ namespace StorageUWPApps
         /// <param name="e"></param>
         private async void GetListButton_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrEmpty(ContainerText.Text)) return;
+
             if (await blob.BlobContainerExistsAsync(ContainerText.Text))
             {
                 var dataList = await blob.BlobGetListAsync(ContainerText.Text);
 
-                if(dataList.Count > 0)
+                if (dataList.Count > 0)
                 {
                     dataListView.ItemsSource = new ObservableCollection<BlobListDataModel>(dataList);
                 }
@@ -101,6 +105,8 @@ namespace StorageUWPApps
         /// <param name="e"></param>
         private async void ContainerCreateButton_Click(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrEmpty(ContainerText.Text)) return;
+
             if (await blob.BlobContainerExistsAsync(ContainerText.Text))
             {
                 var msg = new ContentDialog();
@@ -133,7 +139,7 @@ namespace StorageUWPApps
         /// <param name="e"></param>
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            if(selectBlobData == null || selectBlobData.blobType == "")
+            if (selectBlobData == null || selectBlobData.blobType == "")
             {
                 // アイテムを選択していない
                 var msg = new ContentDialog();
@@ -142,7 +148,7 @@ namespace StorageUWPApps
                 msg.PrimaryButtonText = "OK";
                 await msg.ShowAsync();
             }
-            else if(selectBlobData.contentType.ToString().ToLower().Equals(("Folder").ToLower()))
+            else if (selectBlobData.contentType.ToString().ToLower().Equals(("Folder").ToLower()))
             {
                 // フォルダを選択
                 var msg = new ContentDialog();
@@ -153,6 +159,8 @@ namespace StorageUWPApps
             }
             else
             {
+                // アイテムが選択されている
+
                 var extName = Path.GetExtension(selectBlobData.name);
 
                 // ファイルを選択
@@ -183,6 +191,51 @@ namespace StorageUWPApps
                         Debug.WriteLine($"File {file.Name} couldn't be saved.");
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// アップロード
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void UploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(ContainerText.Text)) return;
+
+            if (await blob.BlobContainerExistsAsync(ContainerText.Text))
+            {
+                var picker = new Windows.Storage.Pickers.FileOpenPicker();
+                picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+                picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+                picker.FileTypeFilter.Add(".jpg");
+                picker.FileTypeFilter.Add(".jpeg");
+                picker.FileTypeFilter.Add(".png");
+                picker.FileTypeFilter.Add(".txt");
+                picker.FileTypeFilter.Add(".");
+
+                Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+                if (file != null)
+                {
+                    var stream = await file.OpenAsync(FileAccessMode.Read);
+                    var size = stream.Size;
+                    byte[] bytes = new byte[size];
+                    var reader = new DataReader(stream.GetInputStreamAt(0));
+                    await reader.LoadAsync((uint)size);
+                    reader.ReadBytes(bytes);
+                    await blob.PutBlobBinaryAsync(ContainerText.Text, file.Name, bytes);
+                }
+                else
+                {
+                }
+            }
+            else
+            {
+                var msg = new ContentDialog();
+                msg.Title = "Container";
+                msg.Content = $"「{ContainerText.Text}」は存在しません。";
+                msg.PrimaryButtonText = "OK";
+                await msg.ShowAsync();
             }
         }
     }
