@@ -141,10 +141,17 @@ namespace AzureStorageClassLibrary.Blob
             return models;
         }
 
-        // Blob binary upload
+        /// <summary>
+        /// Blob binary upload 
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <param name="putFileName"></param>
+        /// <param name="putData"></param>
+        /// <returns></returns>
         public async Task PutBlobBinaryAsync(string containerName, string putFileName, byte[] putData)
         {
             var container = blobClient.GetContainerReference(containerName);
+
             var cloudBlockBlob = container.GetBlockBlobReference(putFileName);
 
             using (var sourceData = new MemoryStream(putData))
@@ -153,12 +160,18 @@ namespace AzureStorageClassLibrary.Blob
             }
         }
 
-        // Blob binary download
+        /// <summary>
+        /// Blob binary download
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <param name="getFileName"></param>
+        /// <returns></returns>
         public async Task<byte[]> GetBlobBinaryAsync(string containerName, string getFileName)
         {
             byte[] retData = new byte[] { };
 
             var container = blobClient.GetContainerReference(containerName);
+
             var cloudBlockBlob = container.GetBlockBlobReference(getFileName);
 
             using (var destData = new MemoryStream())

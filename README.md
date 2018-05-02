@@ -17,7 +17,7 @@ StorageUWPApps
 * [チュートリアルなど.pptx](https://github.com/CryEarth/StorageUWPApps/blob/master/%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AA%E3%81%A9.pptx)
 
 ## Requirement
-* Windows 10
+* Windows 10（開発ではVer1709/1803で確認しています）
 * UWP SDK
 * Azure SDK
 
