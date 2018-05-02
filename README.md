@@ -10,7 +10,7 @@ StorageUWPApps
 ## Description
 * de:code 2018 参加者向け「サンプルコード」
 * Development tools
-  * Visual Sutudio 2017 Professional or Community
+  * Visual Sutudio 2017 Professional or Community （ver 15.6.6/15.6.7で開発しました） 
   * Azure Storage Emulator
   * Azure Storage Explorer
 
